@@ -1,0 +1,51 @@
+\documentclass[a4paper]{article}
+\usepackage{listings}
+\usepackage{inconsolata}
+
+%-----------------
+%Define the colors you want to use
+\usepackage{color}
+\definecolor{keywordcolor}{rgb}{0,0.6,0.6}
+\definecolor{delimcolor}{rgb}{0.461,0.039,0.102}
+\definecolor{Rcommentcolor}{rgb}{0.101,0.043,0.432}
+%-----------------
+%Set up your listings. You can type `texdoc listings` in your terminal
+
+\lstdefinestyle{Rsettings}{
+  language=R,
+  basicstyle=\ttfamily,
+  breaklines=true,
+  showstringspaces=false,
+  keywords={if, else, function, theFunction, tmp},
+  otherkeywords={},
+  commentstyle=\itshape\color{Rcommentcolor},
+  keywordstyle=\color{keywordcolor},
+  moredelim=[s][\color{delimcolor}]{"}{"},
+}
+
+\title{Function listings with linebreaks and code highlighting}
+
+\usepackage{Sweave}
+\begin{document}
+\input{test-concordance}
+\maketitle
+
+Two ways of printing the code.
+
+
+
+\begin{Schunk}
+\begin{Sinput}
+> theFunction <- function(x) {
++   tmp <- "A really long string that should be line-broken but it would be nice to also see code highlighting colors. The function is in the real code sourced, but for the sake of easier reproducibility, it is written here instead."
++ }
+> theFunction
+\end{Sinput}
+\begin{Soutput}
+function(x) {
+  tmp <- "A really long string that should be line-broken but it would be nice to also see code highlighting colors. The function is in the real code sourced, but for the sake of easier reproducibility, it is written here instead."
+}
+\end{Soutput}
+\end{Schunk}
+
+\end{document}

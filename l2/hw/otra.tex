@@ -1,0 +1,1405 @@
+\documentclass[nohyper]{tufte-handout}
+
+%\geometry{showframe}% for debugging purposes -- displays the margins
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage[spanish]{babel}
+\usepackage[T1]{fontenc}
+\usepackage{url}
+
+\usepackage[unicode=true,pdfusetitle,
+ bookmarks=true,bookmarksnumbered=true,bookmarksopen=true,bookmarksopenlevel=2,
+ breaklinks=true,pdfborder={0 0 1},backref=false,colorlinks=false]
+ {hyperref}
+\hypersetup{
+ pdfstartview=FitH}
+%\usepackage{breakurl}
+\makeatletter
+
+% Set up the images/graphics package
+\usepackage{graphicx, framed, xcolor}
+\usepackage{colortbl}
+%\setkeys{Gin}{width=\linewidth,totalheight=\textheight,keepaspectratio}
+%\graphicspath{{graphics/}}
+%\usepackage[table]{xcolor}
+% The following package makes prettier tables.  We're all about the bling!
+%\usepackage{booktabs}
+\definecolor{MySalmon}{rgb}{1,0.85,0.85} 
+\definecolor{shadecolor}{named}{MySalmon}
+% The units package provides nice, non-stacked fractions and better spacing
+% for units.
+\usepackage{units}
+
+%\usepackage{fancyvrb}
+%\fvset{fontsize=\normalsize}
+
+% Small sections of multiple columns
+\usepackage{multicol}
+
+% Provides paragraphs of dummy text
+\usepackage{lipsum}
+\decimalpoint
+
+
+\makeatother
+
+NA
+NA
+
+\usepackage{Sweave}
+\begin{document}
+\input{otra-concordance}
+
+%\SweaveOpts{concordance=TRUE}
+%\maketitle
+%\normalsize
+%\raggedright
+%\setlength\parindent{10pt}
+\maketitle
+
+
+
+NA
+
+
+NA
+NA
+NA
+
+\begin{shaded}
+NA
+de otras variables de entrada $X= (X_1, X_2, \ldots, X_p)$. 
+\end{shaded}
+
+\subsection{Ejemplos}
+NA
+NA
+NA
+
+NA
+NA
+no es 'mayor' que 1, por ejemplo), sino que son {\em etiquetas} que distinguen patrones o resultados.
+NA
+escrito a mano.
+
+NA
+
+NA
+NA
+NA
+dada por $f(X)$ con un estimador $\hat{f}(X)$. Cuanto mejor estimamos $f(X)$, mejor 
+NA
+
+NA
+NA
+
+NA
+ciertas probabilidades de observar los distintos valores de $G$.
+
+NA
+$P(G=paga | X=95\%)=0.85$, mientras que $P(G=paga| X=15\% )=0.97$. En este caso, el 'ruido' o aleatoriedad se expresa en el hecho de que no sabemos con certidumbre el valor de $G$. La parte
+NA
+
+\begin{shaded}
+{\bf Probabilidades condicionales de clase. }
+NA
+NA
+las funciones
+$$p_g(x) = P(G=g|X=x)$$ 
+para cada clase $g$ que $G$ puede tomar, y cada posible valores de las entradas $x$.
+\end{shaded}
+
+\subsection{Ejemplo}
+NA
+NA
+NA
+NA
+no se traslapen). 
+\begin{Schunk}
+\begin{Sinput}
+> library(MASS)
+> library(ggplot2)
+> data(Pima.tr)
+> head(Pima.tr)
+\end{Sinput}
+\begin{Soutput}
+  npreg glu bp skin  bmi   ped age type
+1     5  86 68   28 30.2 0.364  24   No
+2     7 195 70   33 25.1 0.163  55  Yes
+3     5  77 82   41 35.8 0.156  35   No
+4     0 165 76   43 47.9 0.259  26   No
+5     0 107 60   25 26.4 0.133  23   No
+6     5  97 76   27 35.6 0.378  52  Yes
+\end{Soutput}
+\begin{Sinput}
+> ggplot(Pima.tr, aes(x=glu, y=as.numeric(type)-1, colour=type, group=1)) + 
++   geom_jitter(position=position_jitter(height=0.05)) + 
++   geom_smooth(se = FALSE, span=0.8) + 
++   ylab('Probabilidad de tener diabetes')
+\end{Sinput}
+\end{Schunk}
+NA
+que da la probabilidad de que una persona tenga diabetes si su prueba de glucosa
+NA
+$$P(G=1 | X=x)=P(diabetes| Glucosa = x)$$
+
+
+NA
+
+NA
+NA
+queremos predecir. Sea entonces ${\mathcal L}=\{(x_1,g_1), (x_2,g_2),\ldots,(x_n,g_n)\}$ una muestra de entrenamiento.
+Estimamos las funciones (probabilidades condicionales de clase) $p_g(x)$
+mediante
+
+$$\hat{p}_g(x_0)=\frac{1}{k}\sum_{(x_i,y_i)\in N_k(x_0)} I(g_i=g)$$
+que es simplemente
+$$\hat{p}_g (x_0)=\mbox{porcentaje de casos tipo g entre k vecinos de }x_0$$
+
+NA
+clase para estimar las probabilidades condicionales de clase.
+
+
+\subsection{Ejercicio}
+NA
+NA
+NA
+
+
+
+\subsection{Clasificador de Bayes}
+
+NA
+NA
+NA
+
+NA
+correcto. Es decir,
+
+\begin{shaded}
+NA
+$${G}(x) = argmax_{g} P(G=g | X=x).$$
+A este clasificador $G(x)$ se le llama {\bf clasificador de Bayes}.
+\end{shaded}
+
+\subsection{Ejemplo}
+NA
+usamos ciertas entradas $X=x$,  calculamos para una imagen particular que
+$$P(G=gato|X=x)=0.45,$$ 
+$$P(G=perro|X=x)=0.25,$$
+$$P(G=persona|X=x)=0.02$$ 
+NA
+NA
+clasificamos a la imagen como una que contiene un gato.
+
+NA
+
+NA
+de clase es que esta forma de clasificar 
+NA
+incorrecta}
+
+\begin{shaded}
+NA
+NA
+$${G}(x) = argmax_{g} P(G=g | X=x).$$
+NA
+{\em tasa de Bayes}.
+\end{shaded}
+
+
+NA
+NA
+
+
+\begin{shaded}
+NA
+$$Err = E[I(\hat{G}\neq G)    ] = P(\hat{G}\neq G),$$
+NA
+\end{shaded}
+
+
+Este error lo podemos estimar con una muestra de prueba. Si la muestra
+de prueba es 
+$${\mathcal T}=\{(x_1^0, g_1^0),(x_1^0, g_1^0),\ldots, (x_1^0, g_1^0) \},$$ entonces
+$$\hat{Err} = \frac{1}{m}\sum_{i=1}^m I(g_i^0 \neq \hat{G}(x_i^0)).$$
+
+NA
+NA
+
+NA
+NA
+NA
+NA
+
+
+NA
+NA
+en algunos problemas no todos los errores
+son iguales ni deben costar lo mismo. 
+NA
+NA
+cuando hay fraude. Cada error tiene distintos costos y consecuencias. En este
+NA
+
+
+NA
+ 
+NA
+NA
+
+\begin{shaded}
+\begin{itemize}
+NA
+$$\hat{G}(x) = argmax_{g} P(G=g | X=x),$$
+para calcularlo se necesitan conocer las probabilidades a posterior de clase
+$P(G=g|X=x)$ para cada clase $g$ y entrada $X=x$.
+\item Usando una muestra de entrenamiento ${\mathcal L}=\{(x_i, g_i)  \}_{i=1}^n$ (muestra
+etiquetada), construimos estimaciones
+$$\hat{p}_g (x)$$
+de cada $p_g(x)=P(G=g|X=x).$
+\item Replicamos el primer inciso con las estimaciones, y construimos
+el clasificador
+$$\hat{G} (x) = argmax_g \hat{p}_g(x).$$
+NA
+NA
+es el clasificador de Bayes.
+\item Evaluamos el clasificador con una muestra de prueba, por ejemplo
+NA
+\end{itemize}
+\end{shaded}
+
+
+\subsection{Ejemplo}
+Consideramos otra vez el ejemplo de diabetes. Supongamos
+que obtenemos los siguientes resultados para la muestra de prueba
+(prob.Yes y prob.No son las estimaciones de nuestro modelo):
+\begin{Schunk}
+\begin{Sinput}
+> pima.ej
+\end{Sinput}
+\begin{Soutput}
+  glu type prob.Yes prob.No
+1 148  Yes     0.62    0.38
+2  85   No     0.23    0.77
+3  89   No     0.32    0.68
+4  78  Yes     0.20    0.80
+5 197  Yes     0.75    0.25
+\end{Soutput}
+\end{Schunk}
+NA
+NA
+
+
+NA
+
+NA
+tenemos dos probabilidades $p_a(x)$ y $p_b(x)$. Clasificamos a {\em a}
+cuando $p_a(x)>0.5$, y clasificamos a $b$ si $p_a(x) < 0.5$
+
+
+\subsection{Ejercicio}
+NA
+NA
+NA
+condicionales. 
+
+NA
+usando datos de prueba {\em Pima.te}. 
+
+
+
+
+
+NA
+
+NA
+NA
+NA
+que son hiperplanos lineales del espacio de entradas. 
+NA
+
+
+\includegraphics[height=5cm]{clas_lineal.png}
+\includegraphics[height=5cm]{clas_nolineal.png}
+
+NA
+
+NA
+(impago-pago, tiene enfermedad-no tiene enfermedad, etc.), es posible definir la variable
+NA
+$$Y=\begin{cases}
+1 & \mbox{si } G=b\\
+0 & \mbox{si } G=a
+\end{cases}
+$$
+
+NA
+NA
+estableciendo
+
+\begin{equation}\label{clasiflineal}
+p_1(x)=\beta_0 + \sum_{j=1}^p \beta_kx_j.
+\end{equation}
+Clasificamos $\hat{Y}=1$ cuando $p_1(x)>0.5$ y $\hat{Y}=0$ cuando
+ $p_1(x)<0.5$.
+ 
+ El problema con este enfoque es que el lado derecho de \ref{clasiflineal} no
+NA
+ Esto no es un problema grave pero es indeseable. 
+ 
+ Sin embargo, cuando tenemos
+NA
+NA
+ 
+$$Y=\begin{cases}
+0 & \mbox{si } G=a\\
+1 & \mbox{si } G=b\\
+2 & \mbox{si } G=c
+\end{cases}
+$$
+
+NA
+NA
+NA
+NA
+lineales, una para cada clase (0-1), pero, igual que en el ejemplo de dos clases,
+NA
+probabilidades.
+
+NA
+
+NA
+NA
+
+NA
+tenemos una sola entrada $X_1$. Supongamos entonces
+que $G\in\{1,2\}$, y $Y=1$ si $G=2$, $Y=0$ si $G=1$. 
+
+Vimos que estimar poniendo 
+$$p_1(x)=\beta_0+\beta_1 x_1$$
+tiene el defecto de que el lado derecho puede producir valores fuera
+NA
+que transforme la recta real al intervalo $[0,1]:$
+$$p_1(x) = h(\beta_0+\beta_1 x_1),$$
+NA
+NA
+
+NA
+$\beta_0=0$ y $\beta_1=1$, de modo que
+$$p_1(x)=h(x).$$
+NA
+No van a funcionar polinomios, por ejemplo, porque para un polinomio cuando
+$x$ tiende a infinito, el polinomio tiende a $\infty$ o a $-\infty$.
+NA
+al margen):
+
+\begin{shaded}
+NA
+$$h(x)=\frac{e^x}{1+e^x}$$
+\end{shaded}
+\begin{marginfigure}
+\begin{Schunk}
+\begin{Sinput}
+> h <- function(x){exp(x)/(1+exp(x)) }
+> curve(h, from=-6, to =6)
+\end{Sinput}
+\end{Schunk}
+\end{marginfigure}
+
+NA
+el rango de todos los reales dentro del intervalo $[0,1]$.
+
+
+Para $\beta_0$ y $\beta_1$ generales, 
+
+\begin{shaded}
+NA
+$$p_1(x)=p_1(x;\beta)= h(\beta_0+\beta_1x_1)= \frac{e^{\beta_0+\beta_1x_1}}{1+ e^{\beta_0+\beta_1x_1}},$$
+y $$p_0(x)=p_0(x;\beta)=1-p_1(x;\beta),$$
+donde $\beta=(\beta_0,\beta_1)$.
+\end{shaded}
+
+NA
+
+\subsection{Ejercicio}
+\begin{itemize}
+NA
+NA
+$$p_2(x)=\frac{1}{1+e^{\beta_0+\beta_1x_1}}.$$
+\item Graficar las funciones $p_1(x;\beta)$ para distintos
+valores de $\beta_0$ y $\beta_1$.
+\end{itemize}
+
+NA
+
+Ahora consideramos el problema de ajustar el modelo anterior
+cuando tenemos datos de entrenamiento 
+$${\mathcal L}=\{ (x_1,y_1),(x_2,y_2),\ldots, (x_n,y_n) \},$$
+NA
+$\beta=(\beta_0,\beta_1)$ para reflejar lo mejor posible 
+los datos de entrenamiento? Nuestro primer trabajo es
+NA
+datos de entrenamiento}.
+
+
+NA
+
+Un primer intento puede ser considerar como medida de desajuste del modelo
+NA
+$$L(\beta) = \frac{1}{n}\sum_{i=1}^n (y_i- p_1(x))^2$$
+NA
+NA
+
+Si pensamos, por ejemplo, en el problema de tres clases,
+NA
+NA
+a 1. De esta forma, vemos que una medida de desajuste de un modelo
+NA
+$$\frac{1}{n}\sum_{i=1}^n s(p_{g_i}(x))$$
+NA
+NA
+$s$?
+
+Si consideramos que observar la clase $g_i$ cuando $p_{g_i}(x)$ es muy cercana
+NA
+NA
+$p_{g_i}(x)$ es cercana a cero. Entonces podemos tomar, por ejemplo
+$s(z)=-\log(z)$.
+NA
+NA
+como medida de desajuste
+$$- \frac{1}{n}\sum_{i=1}^n \log (p_{g_i(x)}).$$
+
+NA
+NA
+
+Supongamos que tenemos las funciones $p_g(x)$, y nuestra muestra
+de entrenamiento $${\mathcal L}=\{ (x_1,g_1),(x_2,g_2),\ldots, (x_n,g_n) \},$$
+(observaciones independientes)
+Bajo el modelo, la probabilidad de observar la muestra ${\mathcal L}$ es
+$$\prod_{i=1}^n p_{g_i}(x_i).$$
+NA
+NA
+NA
+maximizar la log-verosimilitud
+$$\sum_{i=1}^n \log(p_{g_i}(x_i)),$$
+que es equivalente a minimizar
+$$- \frac{1}{n}\sum_{i=1}^n \log(p_{g_i}(x_i)),$$
+NA
+cuando observamos $g_i$ y nuestro modelo da la probabilidad $p_{g_i}(x)$ a la cantidad
+NA
+
+
+
+NA
+
+Ahora regresamos a nuestro problema de dos clases ($y_i=1$ o $y_i=0$), con
+NA
+
+Recordamos entonces que
+
+$$p_1(x)=p_1(x;\beta)= h(\beta_0+\beta_1x_1)= \frac{e^{\beta_0+\beta_1x_1}}{1+ e^{\beta_0+\beta_1x_1}},$$
+y $$p_0(x)=p_0(x;\beta)=1-p_1(x;\beta),$$
+
+Si nuestra muestra de entrenamiento es 
+$${\mathcal L}=\{ (x_1,y_1),(x_2,y_2),\ldots, (x_n,y_n) \},$$
+
+nuestro criterio de desajuste, la {\bf devianza} es 
+NA
+pues suponemos el conjunto de entrenamiento fijo):
+
+$$D(\beta) = -\frac{2}{n}\sum_{i=1}^n log(p_{y_i}(x_i;\beta))$$
+
+que podemos reescribir separando los casos $y_i=1$ y $y_i=0$:
+
+\begin{shaded}
+NA
+la {\em devianza}, dada por
+$$D(\beta) = -\frac{2}{n}\left(\sum_{y_i=1} \log(p_1(x_i;\beta) + \sum_{y_i=0}\log(1-p_1(x_i;\beta)))\right ).$$
+\end{shaded}
+
+ Se puede demostrar que este
+NA
+NA
+
+NA
+
+$$D(\beta) = -\frac{2}{n}\left(\sum_{i=1}^n
+y_i\log(p_1(x_i;\beta)) + (1-y_i)\log(1-p_1(x_i;\beta))\right ).$$
+
+
+\subsection{Ejemplo}
+NA
+
+NA
+
+\begin{Schunk}
+\begin{Sinput}
+> glm(type ~ glu, data=Pima.tr, family = 'binomial')
+\end{Sinput}
+\begin{Soutput}
+Call:  glm(formula = type ~ glu, family = "binomial", data = Pima.tr)
+
+Coefficients:
+(Intercept)          glu  
+   -5.50364      0.03778  
+
+Degrees of Freedom: 199 Total (i.e. Null);  198 Residual
+Null Deviance:	    256.4 
+Residual Deviance: 207.4 	AIC: 211.4
+\end{Soutput}
+\end{Schunk}
+
+Y para los coeficientes estandarizados:
+\begin{Schunk}
+\begin{Sinput}
+> Pima.tr$glu.st <- (Pima.tr$glu - mean(Pima.tr$glu))/sd(Pima.tr$glu)
+> mod.1 <- glm(type ~ glu.st, data=Pima.tr, family = 'binomial')
+> coef(mod.1)
+\end{Sinput}
+\begin{Soutput}
+(Intercept)      glu.st 
+ -0.8195882   1.1965055 
+\end{Soutput}
+\end{Schunk}
+
+NA
+
+\begin{Schunk}
+\begin{Sinput}
+> quantile(Pima.tr$glu.st)
+\end{Sinput}
+\begin{Soutput}
+        0%        25%        50%        75%       100% 
+-2.1463832 -0.7569340 -0.1095770  0.6325152  2.3693266 
+\end{Soutput}
+\begin{Sinput}
+> grid.glu <- seq(-2.2, 2.4, 0.1)
+> preds.grid <- predict(mod.1, newdata = data.frame(glu.st=grid.glu), 
++   type='response')
+> dat.graf <- data.frame(glu.st=grid.glu, prob=preds.grid)
+> ggplot(dat.graf, aes(x=glu.st, y = prob)) + geom_line()
+\end{Sinput}
+\end{Schunk}
+
+NA
+
+
+
+NA
+
+
+Resolveremos este problema con descenso en gradiente. En primer lugar,
+calculamos las derivadas de $D$ con respecto a $\beta_0$ y $\beta_1$,
+NA
+$$\frac{\partial  p_1}{\partial \beta_0} = {p_1(x;\beta)(1-p_1(x;\beta))},$$
+y 
+$$\frac{\partial  p_1}{\partial \beta_1} = {p_1(x;\beta)(1-p_1(x;\beta))x},$$
+NA
+
+$$ \frac{\partial D}{\partial\beta_0} = \frac{2}{n}\sum_{i=1}^n   (p(x_i;\beta)-y_i)$$
+y 
+$$ \frac{\partial D}{\partial\beta_1} = \frac{2}{n}\sum_{i=1}^n   (p(x_i;\beta)-y_i)x_i$$
+NA
+
+\begin{shaded}
+$$\beta_0 = \beta_0 - \frac{2\eta}{n} \sum_{i=1}^n (p(x_i;\beta) -y_i)$$
+$$\beta_1 = \beta_1 - \frac{2\eta}{n} \sum_{i=1}^n (p(x_i;\beta)-y_i)x_i$$
+\end{shaded}
+NA
+
+
+NA
+
+Consideremos ahora que tenemos entradas $X_1,X_2,\ldots, X_p$, y que la 
+respuesta es $Y$ con posibles valores 0 o 1. Suponemos entonces que
+
+
+$$p_1(x)=p_1(x;\beta)= h(\beta_0+\beta_1x_1+\cdots+\beta_px_p)= 
+\frac{e^{\beta_0+\beta_1x_1+\beta_2x_2+\cdots+\beta_px_p}}{1+ e^{\beta_0+\beta_1x_1+\beta_2x_2+\cdots+\beta_px_p}},$$
+
+Para calcular ahora las derivadas de $D$ con respecto a $\beta_0, \beta_1,\beta_2,\ldots, \beta_p$,
+NA
+$$\frac{\partial  p_1}{\partial \beta_0} = {p_1(x;\beta)(1-p_1(x;\beta))},$$
+y 
+$$\frac{\partial  p_1}{\partial \beta_j} = {p_1(x;\beta)(1-p_1(x;\beta))x_j},$$
+NA
+
+$$ \frac{\partial D}{\partial\beta_0} = \frac{2}{n}\sum_{i=1}^n   (p(x_i;\beta)-y_i)$$
+y 
+$$ \frac{\partial D}{\partial\beta_1} = \frac{2}{n}\sum_{i=1}^n   (p(x_i;\beta)-y_i)x_{ij}$$
+NA
+
+\begin{shaded}
+$$\beta_0 = \beta_0 - \frac{2\eta}{n} \sum_{i=1}^n (p(x_i;\beta)-y_i)$$
+$$\beta_j = \beta_j - \frac{2\eta}{n} \sum_{i=1}^n (p(x_i;\beta)-y_i)x_{ij}$$
+para $j=1,\ldots, p$.
+\end{shaded}
+
+\begin{shaded}
+
+Si definimos $x_{i0} = 1$ (equivale a agregar una columna de unos antes de las
+NA
+$$\beta_j = \beta_j - \frac{2\eta}{n} \sum_{i=1}^n (p(x_i;\beta)(x_i)-y_i)x_{ij}$$
+para $j=0,1,\ldots, p$.
+\end{shaded}
+
+\subsection{Ejemplo}
+NA
+NA
+NA
+NA
+NA
+
+NA
+
+Una vez que hemos estimado $\hat{p}_1 (x)$ y $\hat{p}_0 (x)$
+NA
+NA
+
+NA
+NA
+$\hat{G}(x)=1$ si $\hat{p}_1 (x)>0.5$ y $hat{G}(x)=0$ en otro caso, o
+$$\hat{G}(x)=argmax_{g=0,1} \hat{p}_g(x)$$
+\end{shaded}
+
+Con este clasificador $\hat{G}$ podemos evaluar la tasa
+NA
+o una muestra de prueba.
+
+Falta por verificar que en efecto este proceso da un clasificador
+NA
+$$h(\hat{\beta}_0+\hat{\beta}_1x_1+\cdots+\hat{\beta}_px_p)>0.5.$$
+Tomando la inversa de $h$, y notando que $h(0)=0.5$,
+$$\hat{\beta}_0+\hat{\beta}_1x_1+\cdots+\hat{\beta}_px_p > 0$$
+NA
+$$\hat{\beta}_0+\hat{\beta}_1x_1+\cdots+\hat{\beta}_px_p = 0,$$
+NA
+NA
+
+
+
+NA
+
+NA
+NA
+NA
+distintos costos e implicaciones en problemas particulares, como en el
+NA
+NA
+
+NA
+estas importancias, pero este enfoque tiene dos dificultades:
+\begin{itemize}
+NA
+NA
+en el proceso de ajuste.
+\end{itemize}
+
+Una alternativa en estos casos es analizar directamente el tipo de errores
+NA
+
+
+\begin{shaded}
+NA
+NA
+\end{shaded}
+
+\subsection{Ejemplo}
+NA
+
+\begin{Schunk}
+\begin{Soutput}
+         A   B   C
+A.pred  50   2   0
+B.pred  20 105  30
+C.pred  20  10  30
+\end{Soutput}
+\end{Schunk}
+
+NA
+NA
+Podemos ver esta tabla de distintas formas, por ejemplo, usando porcentajes
+NA
+\begin{Schunk}
+\begin{Sinput}
+> round(prop.table(tabla.1, 2),2)
+\end{Sinput}
+\begin{Soutput}
+          A    B    C
+A.pred 0.56 0.02 0.00
+B.pred 0.22 0.90 0.50
+C.pred 0.22 0.09 0.50
+\end{Soutput}
+\end{Schunk}
+NA
+NA
+\begin{Schunk}
+\begin{Sinput}
+> round(prop.table(tabla.1, 1),2)
+\end{Sinput}
+\begin{Soutput}
+          A    B    C
+A.pred 0.96 0.04 0.00
+B.pred 0.13 0.68 0.19
+C.pred 0.33 0.17 0.50
+\end{Soutput}
+\end{Schunk}
+
+
+NA
+
+Supongamos que la variable a predecir es binaria, y llamaremos
+a una de las clases como {\em positivo} y a otra {\em negativo}. 
+NA
+o que una persona tiene una enfermedad.
+
+\begin{shaded}
+Hay dos tipos de errores en un clasificador binario (positivo - negativo):
+\begin{itemize}
+\item Falsos positivos (fp): clasificar como positivo a un caso negativo.
+\item Falsos negativos (fn): clasificar como negativo a un caso positivo.
+\end{itemize}
+A los casos clasificados correctamente les llamamos positivos verdaderos (pv)
+y negativos verdaderos (nv).
+\end{shaded}
+
+NA
+
+\begin{center}
+\begin{tabular}{r|cc}
+ & positivo & negativo \\
+ \hline
+positivo.pred & pv & fp \\
+negativo.pred & fn & nv \\
+\end{tabular}
+\end{center}
+
+NA
+que tiene la mayor parte de los casos en la diagonal de la matriz
+NA
+
+NA
+NA
+
+\begin{itemize}
+\item {\bf Tasa de falsos positivos} (o {\em fallout})
+$$\frac{fp}{fp+nv}=\frac{fp}{negativos}$$
+\item {\bf Tasa de falsos negativos}  (o {\em miss})
+$$\frac{fn}{pv+fn}=\frac{fn}{positivos}$$
+NA
+$$\frac{nv}{fp+nv}=\frac{nv}{negativos}$$
+NA
+$$\frac{pv}{pv+fn}=\frac{pv}{positivos}$$ 
+\end{itemize}
+
+NA
+
+\begin{itemize}
+NA
+$$\frac{vp}{vp+fp}=\frac{vp}{pred.positivo}$$
+\item {\bf valor predictivo negativo}
+$$\frac{vn}{fn+vn}=\frac{vp}{pred.negativo}$$
+
+\end{itemize}
+
+Generalmente tomamos dos cantidades de estas que reflejen comportamiento
+del clasificador con casos negativos y con casos positivos.
+
+\begin{shaded}
+NA
+Sensibilidad-Especificidad.
+\end{shaded}
+
+NA
+
+\begin{itemize}
+NA
+NA
+\end{itemize}
+
+\subsection{Ejercicio}
+NA
+Por ejemplo:
+NA
+de especificidad y sensibilidad.
+NA
+
+
+\begin{shaded}
+Cada clasificador tiene un balance distinto especificidad-sensibliidad. 
+Muchas veces no escogemos clasificadores por la tasa de incorrectos solamente,
+sino que intentamos buscar un balance adecuado entre el comportamiento de
+NA
+\end{shaded}
+
+\subsection{Ejercicio}
+NA
+NA
+NA
+NA
+
+
+\begin{Schunk}
+\begin{Sinput}
+> modelo.1 <- glm(type ~ glu, data = Pima.tr, family = 'binomial')
+> preds.1 <- fitted(modelo.1) > 0.5
+> head(preds.1)
+\end{Sinput}
+\begin{Soutput}
+    1     2     3     4     5     6 
+FALSE  TRUE FALSE  TRUE FALSE FALSE 
+\end{Soutput}
+\end{Schunk}
+
+Calculamos sobre la muestra de entrenamiento:
+\begin{Schunk}
+\begin{Sinput}
+> tab.confusion.entrena <- table(preds.1, Pima.tr$type)
+> tab.confusion.entrena
+\end{Sinput}
+\begin{Soutput}
+preds.1  No Yes
+  FALSE 118  36
+  TRUE   14  32
+\end{Soutput}
+\begin{Sinput}
+> prop.table(tab.confusion.entrena, 2)
+\end{Sinput}
+\begin{Soutput}
+preds.1        No       Yes
+  FALSE 0.8939394 0.5294118
+  TRUE  0.1060606 0.4705882
+\end{Soutput}
+\end{Schunk}
+
+La especificidad de entrenamiento es 0.89 , y la sensibilidad
+de prueba es de 0.46.
+
+Para la muestra de prueba:
+
+
+\begin{Schunk}
+\begin{Sinput}
+> probs.prueba <- predict(modelo.1, newdata=Pima.te, type='response')
+> preds.prueba <- probs.prueba > 0.5
+> tab.confusion.prueba <- table(preds.prueba, Pima.te$type)
+> tab.confusion.prueba
+\end{Sinput}
+\begin{Soutput}
+preds.prueba  No Yes
+       FALSE 206  58
+       TRUE   17  51
+\end{Soutput}
+\begin{Sinput}
+> prop.table(tab.confusion.prueba, 2)
+\end{Sinput}
+\begin{Soutput}
+preds.prueba         No        Yes
+       FALSE 0.92376682 0.53211009
+       TRUE  0.07623318 0.46788991
+\end{Soutput}
+\end{Schunk}
+
+La especificidad (de prueba) es 0.92 , y la sensibilidad
+(de prueba) es de 0.46. 
+NA
+\begin{Schunk}
+\begin{Sinput}
+> prop.table(tab.confusion.prueba, 1)
+\end{Sinput}
+\begin{Soutput}
+preds.prueba       No      Yes
+       FALSE 0.780303 0.219697
+       TRUE  0.250000 0.750000
+\end{Soutput}
+\end{Schunk}
+
+NA
+(17+58)/332=0.22.
+
+
+\section{Punto de corte para un clasificador binario.}
+
+NA
+un clasificador binario no es apropiado para nuestros fines?
+
+Recordemos que una vez que hemos estimado con $\hat{p}_1 (x)$, 
+NA
+
+\begin{enumerate}
+\item Predecir {\em positivo} si $\hat{p}_1 (x)>0.5$,
+\item Predecir {\em negativo} si $\hat{p}_1 (x)<0.5$
+\end{enumerate}
+
+Esto sugiere una regla alternativa:
+
+\begin{shaded}
+Para $0<d<1$, podemos utilizar nuestras estimaciones
+$\hat{p}_1 (x)$ para construir un clasificador alternativo poniendo:
+\begin{enumerate}
+\item Predecir {\em positivo} si $\hat{p}_1 (x)>d$,
+\item Predecir {\em negativo} si $\hat{p}_1 (x)<d$
+\end{enumerate}
+\end{shaded}
+
+Distintos valores de $d$ dan distintos perfiles de sensibilidad-especificidad
+NA
+
+\begin{itemize}
+NA
+NA
+un caso es positivo para clasificarlo como positivo. Eso quiere decir
+NA
+NA
+pues captamos menos de los verdaderos positivos.
+
+Por ejemplo, si en el caso de diabetes incrementamos el punto
+de corte a 0.7:
+\begin{Schunk}
+\begin{Sinput}
+> probs.prueba <- predict(modelo.1, newdata=Pima.te, type='response')
+> preds.prueba <- probs.prueba > 0.7
+> tab.confusion.prueba <- table(preds.prueba, Pima.te$type)
+> tab.confusion.prueba
+\end{Sinput}
+\begin{Soutput}
+preds.prueba  No Yes
+       FALSE 220  77
+       TRUE    3  32
+\end{Soutput}
+\begin{Sinput}
+> prop.table(tab.confusion.prueba, 2)
+\end{Sinput}
+\begin{Soutput}
+preds.prueba         No        Yes
+       FALSE 0.98654709 0.70642202
+       TRUE  0.01345291 0.29357798
+\end{Soutput}
+\end{Schunk}
+NA
+
+NA
+que un caso es negativo para clasificarlo como negativo. Esto
+aumenta la sensibilidad, pero la especificidad baja.
+\end{itemize}
+
+Por ejemplo, si en el caso de diabetes incrementamos el punto
+de corte a 0.3:
+\begin{Schunk}
+\begin{Sinput}
+> probs.prueba <- predict(modelo.1, newdata=Pima.te, type='response')
+> preds.prueba <- probs.prueba > 0.3
+> tab.confusion.prueba <- table(preds.prueba, Pima.te$type)
+> tab.confusion.prueba
+\end{Sinput}
+\begin{Soutput}
+preds.prueba  No Yes
+       FALSE 170  37
+       TRUE   53  72
+\end{Soutput}
+\begin{Sinput}
+> prop.table(tab.confusion.prueba, 2)
+\end{Sinput}
+\begin{Soutput}
+preds.prueba        No       Yes
+       FALSE 0.7623318 0.3394495
+       TRUE  0.2376682 0.6605505
+\end{Soutput}
+\end{Schunk}
+NA
+(capturamos 0.66 a de los positivos).
+
+\subsection{Espacio ROC de clasificadores}
+NA
+NA
+
+
+
+{\bf Observaciones:}
+\begin{enumerate}
+NA
+que tiene tasa de falsos positivos igual a 0 y sensibilidad igual a 1.
+
+NA
+
+NA
+Esto implica que cuando veamos un caso positivo, la probabilidad de 'atinarle' es de $p$ (sensibilidad), y cuando vemos un negativo,
+NA
+NA
+de la diagonal? Estos son clasificadores particularmente malos,
+pues existen clasificadores con mejor especificidad y/o sensibilidad que son clasificadores al azar! Sin embargo, se puede construir un mejor clasificador volteando las predicciones, lo que cambia sensibilidad por tasa de falsos positivos.
+\end{enumerate}
+
+
+
+
+
+
+NA
+de la tasa de incorrectos, el de corte 0.5. Sin embargo,
+NA
+otros.
+
+\subsection{Ejercicio}
+Utilizaremos las variables {\em glu, bp, skin, bmi, ped,age} para predecir
+la variable {\em type} (si tiene diabetes o no), como en el ejercicio anterior. 
+Como datos de entrenamiento
+utilizaremos {\em Pima.tr} y de prueba {\em Pima.te}
+\begin{enumerate}
+
+
+NA
+{\em glm} o descenso en gradiente. 
+Si usas descenso en gradiente, recuerda estandarizar las variables antes de comenzar.
+
+NA
+NA
+NA
+NA
+reporta los valores de sensibilidad y especificidad. Utiliza puntos de 
+NA
+NA
+NA
+
+\end{enumerate}
+
+
+
+\section{Perfil de un clasificador binario y curvas ROC}
+
+En lugar de examinar cada punto de corte por separado, podemos
+NA
+NA
+
+Consideramos los
+NA
+
+\begin{Schunk}
+\begin{Sinput}
+> library(plyr)
+> library(tabplot)
+> Pima.te.2 <- Pima.te
+> Pima.te.2$probs.prueba <- predict(modelo.1, newdata=Pima.te, type='response')
+> head(arrange(Pima.te.2, desc(probs.prueba)))
+\end{Sinput}
+\begin{Soutput}
+  npreg glu bp skin  bmi   ped age type probs.prueba
+1     2 197 70   45 30.5 0.158  53  Yes    0.8743254
+2     4 197 70   39 36.7 2.329  31   No    0.8743254
+3     8 196 76   29 37.5 0.605  57  Yes    0.8701147
+4     1 196 76   36 36.5 0.875  29  Yes    0.8701147
+5     3 193 70   31 34.9 0.241  25  Yes    0.8567582
+6     5 189 64   33 31.2 0.583  29  Yes    0.8371927
+\end{Soutput}
+\begin{Sinput}
+> tableplot(Pima.te.2, sortCol=probs.prueba)
+\end{Sinput}
+\end{Schunk}
+NA
+podemos cortar para obtener diferentes clasificadores.
+NA
+NA
+
+La calidad general del clasificador se puede resumir considerando,
+NA
+
+Por ejemplo, si usamos todas las variables, obtenemos:
+\begin{Schunk}
+\begin{Sinput}
+> modelo.2 <- glm(type ~ ., data = Pima.tr[,2:8], family = 'binomial')
+> Pima.te.2$probs.prueba.2 <- predict(modelo.2, newdata=Pima.te, type='response')
+> tableplot(Pima.te.2, sortCol=probs.prueba.2)
+\end{Sinput}
+\end{Schunk}
+NA
+
+Podemos ahora mover el punto de corte de manera continua, y graficar todas las posibles combinaciones de especificidad y sensibilidad:
+
+
+\begin{Schunk}
+\begin{Sinput}
+> library(ROCR)
+> pred.rocr.1 <- prediction(Pima.te.2$probs.prueba, Pima.te.2$type)
+> perf.1 <- performance(pred.rocr.1, measure='sens', x.measure='fpr')
+> plot(perf.1)
+> pred.rocr.2 <- prediction(Pima.te.2$probs.prueba.2, Pima.te.2$type)
+> perf.2 <- performance(pred.rocr.2, measure='sens', x.measure='fpr')
+> plot(perf.2, add=TRUE, col='red')
+\end{Sinput}
+\end{Schunk}
+
+Este es un ejemplo de una curva ROC.
+
+\begin{shaded}
+NA
+$\hat{p}_1(x)$, la curva ROC grafica todos los pares 
+de (1-especificidad, sensibilidad) para cada posible punto de
+corte $\hat{p}_1(x)>d$.
+\end{shaded}
+
+
+NA
+
+NA
+NA
+que $G\in \{1,2,\ldots, K\}$ ($K$ clases), y tenemos
+NA
+
+Una estrategia es la de {\bf uno contra todos}:
+
+NA
+\begin{enumerate}
+\item Para cada clase $g\in \{1,\ldots, K\}$ entrenamos un modelo
+NA
+\item Para clasificar un nuevo caso $x$, calculamos
+$$\hat{p}_1^{(1)}(x), \hat{p}_1^{(2)}(x),\ldots, \hat{p}_1^{(K)}(x),$$
+NA
+$$\hat{G} (x) = argmax_g \hat{p}_1^{(g)}(x).$$
+\end{enumerate}
+\end{shaded}
+
+NA
+independientes de cada clase. En este sentido, produce estimaciones
+que en realidad no satisfacen las propiedades del modelo de probabilidad establecido.
+Sin embargo, {\em esta estrategia es simple y en muchos
+casos funciona bien}.
+
+
+
+NA
+
+Si queremos obtener estimaciones de las probabilidades de clase que sumen
+uno, entonces tenemos que contruir las estimaciones de cada clase
+de clase de manera conjunta.
+
+Como vimos antes, tenemos que estimar, para cada $x$ y $g\in \{1,\ldots,K\}$, las probabilidades condicionales de clase:
+$$p_g(x)=P(G=g|X=x).$$ 
+
+NA
+$$\log P(G=1|X=x)= \beta_0+\beta_1x_1+\cdots+\beta_px_p - \log Z$$
+$$\log P(G=2|X=x)=  - \log Z$$
+donde vemos a $Z=1+\exp(\beta_0+\beta_1x_1+\cdots+\beta_px_p)$ como un 
+NA
+ponemos nuevos coeficientes para $G=2$ en estas ecuaciones, pues
+$P(G=1|X=x)$ determina $P(G=2|X=x)=1-P(G=1|X=x)$.
+ 
+NA
+\begin{eqnarray*}
+\log P(G=1|X=x)&= &\beta_0^1+\beta_1^1 x_1+\cdots+\beta_p^1x_p - \log  Z\\
+\log P(G=2|X=x)&= &\beta_0^2+\beta_1^2 x_1+\cdots+\beta_p^2x_p - \log  Z\\
+ &\vdots& \\
+\log P(G=K|X=x) &= & - \log Z
+\end{eqnarray*}
+
+NA
+
+Tomando exponencial, sumando, e igualando a uno (para garantizar que estas probabilidades suman 1), despejamos para
+obtener $Z$:
+$$Z = 1+ \sum_{j=1}^{K-1} \exp (\beta_0^j+\beta_1^jx_1+\cdots+\beta_p^jx_p), $$ 
+de modo que
+\begin{eqnarray*}
+P(G=1|X=x)&= &
+\frac{\exp(\beta_0^1+\beta_1^1 x_1+\cdots+\beta_p^1x_p)}{1+\sum_{j=1}^{K-1} \exp (\beta_0^j+\beta_1^jx_1+\cdots+\beta_p^jx_p)  }\\
+P(G=2|X=x)&= &
+\frac{\exp(\beta_0^2+\beta_1^2 x_1+\cdots+\beta_p^2x_p)}{1+\sum_{j=1}^{K-1} \exp (\beta_0^j+\beta_1^jx_1+\cdots+\beta_p^jx_p)  }\\
+ &\vdots& \\
+\log P(G=K|X=x) &= & \frac{1}{1+\sum_{j=1}^{K-1} \exp (\beta_0^j+\beta_1^jx_1+\cdots+\beta_p^jx_p)} 
+\end{eqnarray*}
+
+Para ajustar los coeficientes, utilizamos el criterio de devianza
+que explicamos arriba. En este caso, buscamos minimizar la misma cantidad
+$$D(\beta) = -\frac{2}{n}\sum_{i=1}^n p_{g_i}(x_i;\beta),$$
+NA
+$$\beta=(\beta_0^1, \beta_1^1, \ldots, \beta_p^1, \beta_0^2, \beta_1^2, \ldots, \beta_p^2,\ldots, \beta_0^{K-1}, \beta_1^{K-1}, \ldots, \beta_p^{K-1} ).$$
+
+NA
+
+NA
+
+NA
+
+\begin{Schunk}
+\begin{Sinput}
+> library(ElemStatLearn)
+> dim(zip.train)
+\end{Sinput}
+\begin{Soutput}
+[1] 7291  257
+\end{Soutput}
+\begin{Sinput}
+> dim(zip.test)
+\end{Sinput}
+\begin{Soutput}
+[1] 2007  257
+\end{Soutput}
+\begin{Sinput}
+> mat.coeficientes <- matrix(NA, nrow=256+1, ncol=10)
+> for(i in 0:9){
++   clase.bin <- as.numeric(zip.train[,1] == i)
++   dat <- data.frame(clase=clase.bin, zip.train[,-1])
++   modelo <- glm(clase ~ ., data=dat)
++   mat.coeficientes[,i + 1] <- coef(modelo)
++ }
+\end{Sinput}
+\end{Schunk}
+
+NA
+a matriz y graficando (eliminamos las $\beta_0$):
+\begin{figure}
+\begin{Schunk}
+\begin{Sinput}
+> library(reshape2)
+> library(Hmisc)
+> mat.2 <- melt(mat.coeficientes[-1,])
+> mat.2$y <- -(mat.2$Var1 %/% 16 )
+> mat.2$x <- mat.2$Var1 %% 16 
+> mat.2$Var2 <- mat.2$Var2 - 1
+> ggplot(mat.2, aes(x=x, y=y)) + 
++   geom_tile(aes(fill=cut2(value,g=3))) + facet_wrap(~Var2)
+\end{Sinput}
+\end{Schunk}
+\end{figure}
+NA
+de que la tasa de error de prueba es casi el doble que la tasa
+NA
+ Por otro lado, un modelo simple como
+NA
+cada pixel contribuye de la misma forma independientemente de 
+NA
+NA
+NA
+
+
+Para construir predicciones utilizamos la matriz de coeficientes:
+\begin{Schunk}
+\begin{Sinput}
+> h <- function(x){exp(x)/(1+exp(x))}
+> pred.digito <- function(mat, beta){
++    prob.pred <- h(cbind(1, mat)%*%beta)
++    apply(prob.pred, 1, which.max) - 1
++ }
+\end{Sinput}
+\end{Schunk}
+
+Por ejemplo, para la muestra de entrenamiento:
+
+\begin{Schunk}
+\begin{Sinput}
+> library(ElemStatLearn)
+> clasif.entrena <- pred.digito(zip.train[,-1], mat.coeficientes)
+> head(clasif.entrena)
+\end{Sinput}
+\begin{Soutput}
+[1] 6 5 4 7 3 4
+\end{Soutput}
+\end{Schunk}
+
+NA
+NA
+
+\begin{Schunk}
+\begin{Sinput}
+> mean(clasif.entrena != zip.train[,1])
+\end{Sinput}
+\begin{Soutput}
+[1] 0.07598409
+\end{Soutput}
+\begin{Sinput}
+> table(clasif.entrena, zip.train[,1])
+\end{Sinput}
+\begin{Soutput}
+clasif.entrena    0    1    2    3    4    5    6    7
+             0 1177    0    9    8    2   17   10    4
+             1    0 1002    5    0   25    1    7    4
+             2    1    1  649    5    7    3    8    0
+             3    4    0   22  612    0   30    1    0
+             4    3    0   13    0  589   10   14    4
+             5    1    0    2    9    3  478    9    2
+             6    7    0   11    0    5    9  608    0
+             7    0    0    6    9    1    0    0  593
+             8    1    1   12   13    4    5    7    3
+             9    0    1    2    2   16    3    0   35
+              
+clasif.entrena    8    9
+             0   24    1
+             1    6    7
+             2    4    0
+             3   17    1
+             4   14   26
+             5   12    6
+             6    5    0
+             7    3   20
+             8  451    5
+             9    6  578
+\end{Soutput}
+\end{Schunk}
+
+NA
+la muestra de prueba zip.test:
+
+\begin{Schunk}
+\begin{Sinput}
+> clasif.prueba <- pred.digito(zip.test[,-1], mat.coeficientes)
+> mean(clasif.prueba != zip.test[,1])
+\end{Sinput}
+\begin{Soutput}
+[1] 0.1305431
+\end{Soutput}
+\begin{Sinput}
+> table(clasif.prueba, zip.test[,1])
+\end{Sinput}
+\begin{Soutput}
+clasif.prueba   0   1   2   3   4   5   6   7   8   9
+            0 347   0   8   5   3   9   3   3   8   0
+            1   2 254   3   0   7   1   2   1   3   3
+            2   0   0 157   4   4   0   4   1   2   0
+            3   1   2   7 138   0  20   0   1  14   0
+            4   3   3   9   2 169   2   5   7   4   7
+            5   1   0   2   8   1 122   4   0  10   0
+            6   4   3   1   0   3   0 151   0   1   0
+            7   0   0   1   2   2   1   0 130   1   7
+            8   0   1  10   3   1   1   1   0 119   2
+            9   1   1   0   4  10   4   0   4   4 158
+\end{Soutput}
+\begin{Sinput}
+> round(prop.table(table(clasif.prueba, zip.test[,1]), margin = 2),2)
+\end{Sinput}
+\begin{Soutput}
+clasif.prueba    0    1    2    3    4    5    6    7
+            0 0.97 0.00 0.04 0.03 0.02 0.06 0.02 0.02
+            1 0.01 0.96 0.02 0.00 0.04 0.01 0.01 0.01
+            2 0.00 0.00 0.79 0.02 0.02 0.00 0.02 0.01
+            3 0.00 0.01 0.04 0.83 0.00 0.12 0.00 0.01
+            4 0.01 0.01 0.05 0.01 0.84 0.01 0.03 0.05
+            5 0.00 0.00 0.01 0.05 0.00 0.76 0.02 0.00
+            6 0.01 0.01 0.01 0.00 0.02 0.00 0.89 0.00
+            7 0.00 0.00 0.01 0.01 0.01 0.01 0.00 0.88
+            8 0.00 0.00 0.05 0.02 0.00 0.01 0.01 0.00
+            9 0.00 0.00 0.00 0.02 0.05 0.02 0.00 0.03
+             
+clasif.prueba    8    9
+            0 0.05 0.00
+            1 0.02 0.02
+            2 0.01 0.00
+            3 0.08 0.00
+            4 0.02 0.04
+            5 0.06 0.00
+            6 0.01 0.00
+            7 0.01 0.04
+            8 0.72 0.01
+            9 0.02 0.89
+\end{Soutput}
+\end{Schunk}
+
+NA
+NA
+NA
+
+
+\section{Tarea}
+Seguir y replicar el ejercicio de {\em Introduction to Statistical Learning with R} (ver archivo pdf en el sitio).  Haz curvas ROC para los clasificadores
+NA
+NA
+NA

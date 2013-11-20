@@ -1,0 +1,539 @@
+Call:
+rpart(formula = spam ~ ., data = spam.train, method = "class", 
+    control = control.completo)
+  n= 3067 
+
+         CP nsplit rel error xerror    xstd
+1  0.490879      0    1.0000 1.0000 0.02243
+2  0.136816      1    0.5091 0.5406 0.01879
+3  0.052239      2    0.3723 0.4478 0.01749
+4  0.039801      3    0.3201 0.3342 0.01551
+5  0.031509      4    0.2803 0.2960 0.01473
+6  0.011609      5    0.2488 0.2678 0.01410
+7  0.010779      6    0.2371 0.2678 0.01410
+8  0.006633      7    0.2264 0.2537 0.01376
+9  0.004975      9    0.2131 0.2430 0.01350
+10 0.004146     18    0.1667 0.2289 0.01314
+11 0.003317     20    0.1584 0.2206 0.01292
+12 0.002800     24    0.1451 0.2098 0.01263
+
+Variable importance
+  cfdollar   wfremove    wfmoney      wf000      cfexc    wforder   wfcredit wfbusiness       wfhp 
+        23         10          9          9          7          4          4          4          4 
+    wffree   crltotal crllongest      wfhpl crlaverage      wfour   wfgeorge      wfedu       cfsc 
+         3          2          2          2          1          1          1          1          1 
+    wfyour  wfmeeting      wf650     wflabs     wffont   wftelnet     wf1999      wflab 
+         1          1          1          1          1          1          1          1 
+
+Node number 1: 3067 observations,    complexity param=0.4909
+  predicted class=0  expected loss=0.3932  P(node) =1
+    class counts:  1861  1206
+   probabilities: 0.607 0.393 
+  left son=2 (2259 obs) right son=3 (808 obs)
+  Primary splits:
+      cfdollar < 0.0395 to the left,  improve=491.1, (0 missing)
+      cfexc    < 0.0795 to the left,  improve=481.8, (0 missing)
+      wfremove < 0.01   to the left,  improve=397.4, (0 missing)
+      wffree   < 0.095  to the left,  improve=392.3, (0 missing)
+      wfyour   < 0.375  to the left,  improve=372.1, (0 missing)
+  Surrogate splits:
+      wf000      < 0.025  to the left,  agree=0.831, adj=0.359, (0 split)
+      wfmoney    < 0.045  to the left,  agree=0.826, adj=0.340, (0 split)
+      wforder    < 0.025  to the left,  agree=0.788, adj=0.194, (0 split)
+      wfcredit   < 0.02   to the left,  agree=0.785, adj=0.184, (0 split)
+      wfbusiness < 0.005  to the left,  agree=0.784, adj=0.182, (0 split)
+
+Node number 2: 2259 observations,    complexity param=0.1368
+  predicted class=0  expected loss=0.224  P(node) =0.7366
+    class counts:  1753   506
+   probabilities: 0.776 0.224 
+  left son=4 (2058 obs) right son=5 (201 obs)
+  Primary splits:
+      wfremove < 0.065  to the left,  improve=207.9, (0 missing)
+      cfexc    < 0.0915 to the left,  improve=179.2, (0 missing)
+      wffree   < 0.135  to the left,  improve=175.3, (0 missing)
+      wfyour   < 0.445  to the left,  improve=103.4, (0 missing)
+      wfour    < 0.195  to the left,  improve=100.3, (0 missing)
+  Surrogate splits:
+      crllongest < 131.5  to the left,  agree=0.915, adj=0.045, (0 split)
+      wfcredit   < 1.115  to the left,  agree=0.912, adj=0.015, (0 split)
+      cfpound    < 0.9635 to the left,  agree=0.912, adj=0.015, (0 split)
+      wf3d       < 5.225  to the left,  agree=0.912, adj=0.010, (0 split)
+      wfbusiness < 4.355  to the left,  agree=0.912, adj=0.010, (0 split)
+
+Node number 3: 808 observations,    complexity param=0.0398
+  predicted class=1  expected loss=0.1337  P(node) =0.2634
+    class counts:   108   700
+   probabilities: 0.134 0.866 
+  left son=6 (62 obs) right son=7 (746 obs)
+  Primary splits:
+      wfhp     < 0.4    to the right, improve=76.24, (0 missing)
+      cfexc    < 0.0755 to the left,  improve=38.91, (0 missing)
+      wfhpl    < 0.12   to the right, improve=35.16, (0 missing)
+      wf1999   < 0.115  to the right, improve=34.18, (0 missing)
+      wfgeorge < 0.21   to the right, improve=28.90, (0 missing)
+  Surrogate splits:
+      wfhpl    < 0.35   to the right, agree=0.954, adj=0.403, (0 split)
+      wf650    < 0.02   to the right, agree=0.939, adj=0.210, (0 split)
+      wflabs   < 0.03   to the right, agree=0.939, adj=0.210, (0 split)
+      wftelnet < 0.045  to the right, agree=0.938, adj=0.194, (0 split)
+      wflab    < 0.08   to the right, agree=0.934, adj=0.145, (0 split)
+
+Node number 4: 2058 observations,    complexity param=0.05224
+  predicted class=0  expected loss=0.1569  P(node) =0.671
+    class counts:  1735   323
+   probabilities: 0.843 0.157 
+  left son=8 (1815 obs) right son=9 (243 obs)
+  Primary splits:
+      cfexc      < 0.3935 to the left,  improve=123.10, (0 missing)
+      wffree     < 0.295  to the left,  improve= 99.71, (0 missing)
+      crlaverage < 3.383  to the left,  improve= 49.57, (0 missing)
+      wfyour     < 0.845  to the left,  improve= 43.71, (0 missing)
+      wfour      < 0.345  to the left,  improve= 40.48, (0 missing)
+  Surrogate splits:
+      wf000      < 0.46   to the left,  agree=0.887, adj=0.041, (0 split)
+      wffree     < 2.51   to the left,  agree=0.886, adj=0.033, (0 split)
+      wfmoney    < 3.305  to the left,  agree=0.883, adj=0.012, (0 split)
+      wfpeople   < 2.53   to the left,  agree=0.883, adj=0.008, (0 split)
+      wfbusiness < 3.705  to the left,  agree=0.883, adj=0.008, (0 split)
+
+Node number 5: 201 observations,    complexity param=0.006633
+  predicted class=1  expected loss=0.08955  P(node) =0.06554
+    class counts:    18   183
+   probabilities: 0.090 0.910 
+  left son=10 (8 obs) right son=11 (193 obs)
+  Primary splits:
+      wfgeorge < 0.14   to the right, improve=13.810, (0 missing)
+      wfhp     < 0.185  to the right, improve= 7.268, (0 missing)
+      wflabs   < 0.2    to the right, improve= 6.766, (0 missing)
+      wf857    < 0.115  to the right, improve= 6.766, (0 missing)
+      wf415    < 0.115  to the right, improve= 6.766, (0 missing)
+  Surrogate splits:
+      wf857  < 0.115  to the right, agree=0.980, adj=0.500, (0 split)
+      wf415  < 0.115  to the right, agree=0.980, adj=0.500, (0 split)
+      wf85   < 0.185  to the right, agree=0.980, adj=0.500, (0 split)
+      wfhp   < 0.415  to the right, agree=0.975, adj=0.375, (0 split)
+      wf1999 < 0.285  to the right, agree=0.975, adj=0.375, (0 split)
+
+Node number 6: 62 observations,    complexity param=0.003317
+  predicted class=0  expected loss=0.1129  P(node) =0.02022
+    class counts:    55     7
+   probabilities: 0.887 0.113 
+  left son=12 (58 obs) right son=13 (4 obs)
+  Primary splits:
+      wfremove < 0.075  to the left,  improve=6.730, (0 missing)
+      wfemail  < 0.285  to the left,  improve=5.708, (0 missing)
+      cfdollar < 0.256  to the left,  improve=3.471, (0 missing)
+      wfover   < 0.345  to the left,  improve=3.253, (0 missing)
+      cfexc    < 0.5325 to the left,  improve=3.253, (0 missing)
+  Surrogate splits:
+      wfemail  < 0.56   to the left,  agree=0.984, adj=0.75, (0 split)
+      cfexc    < 0.5325 to the left,  agree=0.968, adj=0.50, (0 split)
+      cfdollar < 0.256  to the left,  agree=0.968, adj=0.50, (0 split)
+      wffree   < 0.69   to the left,  agree=0.952, adj=0.25, (0 split)
+
+Node number 7: 746 observations,    complexity param=0.01078
+  predicted class=1  expected loss=0.07105  P(node) =0.2432
+    class counts:    53   693
+   probabilities: 0.071 0.929 
+  left son=14 (13 obs) right son=15 (733 obs)
+  Primary splits:
+      wfedu      < 0.49   to the right, improve=22.830, (0 missing)
+      wfmeeting  < 0.315  to the right, improve=15.720, (0 missing)
+      wfgeorge   < 0.21   to the right, improve=12.190, (0 missing)
+      crllongest < 7.5    to the left,  improve=11.770, (0 missing)
+      cfexc      < 0.0265 to the left,  improve= 9.525, (0 missing)
+
+Node number 8: 1815 observations,    complexity param=0.004975
+  predicted class=0  expected loss=0.09366  P(node) =0.5918
+    class counts:  1645   170
+   probabilities: 0.906 0.094 
+  left son=16 (1686 obs) right son=17 (129 obs)
+  Primary splits:
+      wffree  < 0.275  to the left,  improve=26.59, (0 missing)
+      wfmoney < 0.01   to the left,  improve=25.78, (0 missing)
+      wf000   < 0.3    to the left,  improve=21.78, (0 missing)
+      wfyour  < 1.135  to the left,  improve=15.41, (0 missing)
+      wfour   < 0.115  to the left,  improve=15.13, (0 missing)
+
+Node number 9: 243 observations,    complexity param=0.03151
+  predicted class=1  expected loss=0.3704  P(node) =0.07923
+    class counts:    90   153
+   probabilities: 0.370 0.630 
+  left son=18 (114 obs) right son=19 (129 obs)
+  Primary splits:
+      crltotal   < 65.5   to the left,  improve=37.71, (0 missing)
+      crlaverage < 2.67   to the left,  improve=35.07, (0 missing)
+      crllongest < 10.5   to the left,  improve=29.56, (0 missing)
+      wffree     < 0.04   to the left,  improve=23.70, (0 missing)
+      wfour      < 0.07   to the left,  improve=14.59, (0 missing)
+  Surrogate splits:
+      crllongest < 15.5   to the left,  agree=0.868, adj=0.719, (0 split)
+      crlaverage < 2.805  to the left,  agree=0.761, adj=0.491, (0 split)
+      wfyour     < 0.115  to the left,  agree=0.728, adj=0.421, (0 split)
+      wfour      < 0.07   to the left,  agree=0.708, adj=0.377, (0 split)
+      wffree     < 0.04   to the left,  agree=0.695, adj=0.351, (0 split)
+
+Node number 10: 8 observations
+  predicted class=0  expected loss=0  P(node) =0.002608
+    class counts:     8     0
+   probabilities: 1.000 0.000 
+
+Node number 11: 193 observations
+  predicted class=1  expected loss=0.05181  P(node) =0.06293
+    class counts:    10   183
+   probabilities: 0.052 0.948 
+
+Node number 12: 58 observations
+  predicted class=0  expected loss=0.05172  P(node) =0.01891
+    class counts:    55     3
+   probabilities: 0.948 0.052 
+
+Node number 13: 4 observations
+  predicted class=1  expected loss=0  P(node) =0.001304
+    class counts:     0     4
+   probabilities: 0.000 1.000 
+
+Node number 14: 13 observations
+  predicted class=0  expected loss=0  P(node) =0.004239
+    class counts:    13     0
+   probabilities: 1.000 0.000 
+
+Node number 15: 733 observations,    complexity param=0.006633
+  predicted class=1  expected loss=0.05457  P(node) =0.239
+    class counts:    40   693
+   probabilities: 0.055 0.945 
+  left son=30 (8 obs) right son=31 (725 obs)
+  Primary splits:
+      wfmeeting  < 0.315  to the right, improve=14.460, (0 missing)
+      wfgeorge   < 0.21   to the right, improve=12.690, (0 missing)
+      crllongest < 5.5    to the left,  improve= 9.142, (0 missing)
+      crltotal   < 31.5   to the left,  improve= 6.152, (0 missing)
+      wfhpl      < 0.275  to the right, improve= 5.595, (0 missing)
+
+Node number 16: 1686 observations,    complexity param=0.004975
+  predicted class=0  expected loss=0.06999  P(node) =0.5497
+    class counts:  1568   118
+   probabilities: 0.930 0.070 
+  left son=32 (1647 obs) right son=33 (39 obs)
+  Primary splits:
+      wfmoney    < 0.01   to the left,  improve=21.570, (0 missing)
+      wf000      < 0.345  to the left,  improve=16.130, (0 missing)
+      crlaverage < 8.377  to the left,  improve=10.530, (0 missing)
+      wffont     < 0.155  to the left,  improve= 9.766, (0 missing)
+      crllongest < 32.5   to the left,  improve= 8.271, (0 missing)
+  Surrogate splits:
+      wf000    < 0.345  to the left,  agree=0.979, adj=0.077, (0 split)
+      wfcredit < 3.945  to the left,  agree=0.978, adj=0.051, (0 split)
+      crltotal < 6278   to the left,  agree=0.978, adj=0.051, (0 split)
+      wf3d     < 0.695  to the left,  agree=0.977, adj=0.026, (0 split)
+
+Node number 17: 129 observations,    complexity param=0.004975
+  predicted class=0  expected loss=0.4031  P(node) =0.04206
+    class counts:    77    52
+   probabilities: 0.597 0.403 
+  left son=34 (36 obs) right son=35 (93 obs)
+  Primary splits:
+      wfre       < 0.195  to the right, improve=10.210, (0 missing)
+      wfour      < 1.135  to the left,  improve= 7.247, (0 missing)
+      wfgeorge   < 0.19   to the right, improve= 6.798, (0 missing)
+      wfover     < 0.015  to the left,  improve= 5.873, (0 missing)
+      wfinternet < 0.555  to the left,  improve= 5.353, (0 missing)
+  Surrogate splits:
+      wfedu      < 0.1    to the right, agree=0.760, adj=0.139, (0 split)
+      cfpound    < 0.0455 to the right, agree=0.752, adj=0.111, (0 split)
+      wf1999     < 0.61   to the right, agree=0.744, adj=0.083, (0 split)
+      wforiginal < 0.4    to the right, agree=0.744, adj=0.083, (0 split)
+      wfgeorge   < 2.34   to the right, agree=0.736, adj=0.056, (0 split)
+
+Node number 18: 114 observations,    complexity param=0.01161
+  predicted class=0  expected loss=0.3333  P(node) =0.03717
+    class counts:    76    38
+   probabilities: 0.667 0.333 
+  left son=36 (98 obs) right son=37 (16 obs)
+  Primary splits:
+      wffree     < 0.845  to the left,  improve=13.590, (0 missing)
+      crlaverage < 2.586  to the left,  improve=11.660, (0 missing)
+      cfexc      < 0.8045 to the left,  improve= 6.143, (0 missing)
+      crltotal   < 22.5   to the left,  improve= 5.700, (0 missing)
+      wfyou      < 4.25   to the left,  improve= 3.997, (0 missing)
+  Surrogate splits:
+      crlaverage < 3.6    to the left,  agree=0.912, adj=0.375, (0 split)
+      cfsc       < 0.266  to the left,  agree=0.895, adj=0.250, (0 split)
+      wfemail    < 1.69   to the left,  agree=0.886, adj=0.187, (0 split)
+      wfour      < 2.345  to the left,  agree=0.877, adj=0.125, (0 split)
+      wfover     < 1.2    to the left,  agree=0.877, adj=0.125, (0 split)
+
+Node number 19: 129 observations,    complexity param=0.004146
+  predicted class=1  expected loss=0.1085  P(node) =0.04206
+    class counts:    14   115
+   probabilities: 0.109 0.891 
+  left son=38 (7 obs) right son=39 (122 obs)
+  Primary splits:
+      wfpm       < 0.065  to the right, improve=8.296, (0 missing)
+      wfedu      < 0.065  to the right, improve=6.561, (0 missing)
+      wfhp       < 0.225  to the right, improve=3.397, (0 missing)
+      wforiginal < 0.43   to the right, improve=3.397, (0 missing)
+      wfgeorge   < 1.4    to the right, improve=3.229, (0 missing)
+  Surrogate splits:
+      wfgeorge  < 1.4    to the right, agree=0.961, adj=0.286, (0 split)
+      wf857     < 0.25   to the right, agree=0.961, adj=0.286, (0 split)
+      wf415     < 0.32   to the right, agree=0.961, adj=0.286, (0 split)
+      wfcs      < 0.43   to the right, agree=0.961, adj=0.286, (0 split)
+      wfmeeting < 0.38   to the right, agree=0.961, adj=0.286, (0 split)
+
+Node number 30: 8 observations
+  predicted class=0  expected loss=0  P(node) =0.002608
+    class counts:     8     0
+   probabilities: 1.000 0.000 
+
+Node number 31: 725 observations,    complexity param=0.004146
+  predicted class=1  expected loss=0.04414  P(node) =0.2364
+    class counts:    32   693
+   probabilities: 0.044 0.956 
+  left son=62 (7 obs) right son=63 (718 obs)
+  Primary splits:
+      wfgeorge     < 0.21   to the right, improve=9.344, (0 missing)
+      wfhpl        < 0.275  to the right, improve=5.753, (0 missing)
+      crllongest   < 9.5    to the left,  improve=4.097, (0 missing)
+      wfconference < 0.47   to the right, improve=3.665, (0 missing)
+      cfexc        < 0.1365 to the left,  improve=3.151, (0 missing)
+
+Node number 32: 1647 observations,    complexity param=0.004975
+  predicted class=0  expected loss=0.05768  P(node) =0.537
+    class counts:  1552    95
+   probabilities: 0.942 0.058 
+  left son=64 (1621 obs) right son=65 (26 obs)
+  Primary splits:
+      wffont     < 0.155  to the left,  improve=10.340, (0 missing)
+      crlaverage < 6.68   to the left,  improve= 7.615, (0 missing)
+      crllongest < 416    to the left,  improve= 5.338, (0 missing)
+      wfour      < 0.715  to the left,  improve= 4.979, (0 missing)
+      wfhp       < 0.025  to the right, improve= 4.943, (0 missing)
+  Surrogate splits:
+      cfsc    < 2.538  to the left,  agree=0.990, adj=0.346, (0 split)
+      cfpound < 0.4025 to the left,  agree=0.989, adj=0.308, (0 split)
+
+Node number 33: 39 observations,    complexity param=0.004975
+  predicted class=1  expected loss=0.4103  P(node) =0.01272
+    class counts:    16    23
+   probabilities: 0.410 0.590 
+  left son=66 (20 obs) right son=67 (19 obs)
+  Primary splits:
+      wfour      < 0.08   to the left,  improve=6.893, (0 missing)
+      cfexc      < 0.072  to the left,  improve=6.562, (0 missing)
+      crlaverage < 2.544  to the left,  improve=6.507, (0 missing)
+      crllongest < 9.5    to the left,  improve=5.934, (0 missing)
+      crltotal   < 77.5   to the left,  improve=5.934, (0 missing)
+  Surrogate splits:
+      cfexc      < 0.0265 to the left,  agree=0.846, adj=0.684, (0 split)
+      wfover     < 0.045  to the left,  agree=0.795, adj=0.579, (0 split)
+      wfinternet < 0.01   to the left,  agree=0.795, adj=0.579, (0 split)
+      crltotal   < 133    to the left,  agree=0.795, adj=0.579, (0 split)
+      wfall      < 0.085  to the left,  agree=0.769, adj=0.526, (0 split)
+
+Node number 34: 36 observations
+  predicted class=0  expected loss=0.08333  P(node) =0.01174
+    class counts:    33     3
+   probabilities: 0.917 0.083 
+
+Node number 35: 93 observations,    complexity param=0.004975
+  predicted class=1  expected loss=0.4731  P(node) =0.03032
+    class counts:    44    49
+   probabilities: 0.473 0.527 
+  left son=70 (74 obs) right son=71 (19 obs)
+  Primary splits:
+      wfour      < 1.135  to the left,  improve=6.462, (0 missing)
+      crltotal   < 125.5  to the left,  improve=6.308, (0 missing)
+      wfgeorge   < 0.19   to the right, improve=5.532, (0 missing)
+      wfover     < 0.015  to the left,  improve=4.684, (0 missing)
+      wfinternet < 0.555  to the left,  improve=3.919, (0 missing)
+  Surrogate splits:
+      wfyour    < 3.33   to the left,  agree=0.849, adj=0.263, (0 split)
+      wfall     < 0.705  to the left,  agree=0.817, adj=0.105, (0 split)
+      wfaddress < 0.68   to the left,  agree=0.806, adj=0.053, (0 split)
+      wfover    < 0.405  to the left,  agree=0.806, adj=0.053, (0 split)
+      wfyou     < 6.06   to the left,  agree=0.806, adj=0.053, (0 split)
+
+Node number 36: 98 observations
+  predicted class=0  expected loss=0.2347  P(node) =0.03195
+    class counts:    75    23
+   probabilities: 0.765 0.235 
+
+Node number 37: 16 observations
+  predicted class=1  expected loss=0.0625  P(node) =0.005217
+    class counts:     1    15
+   probabilities: 0.062 0.938 
+
+Node number 38: 7 observations
+  predicted class=0  expected loss=0.1429  P(node) =0.002282
+    class counts:     6     1
+   probabilities: 0.857 0.143 
+
+Node number 39: 122 observations
+  predicted class=1  expected loss=0.06557  P(node) =0.03978
+    class counts:     8   114
+   probabilities: 0.066 0.934 
+
+Node number 62: 7 observations
+  predicted class=0  expected loss=0.1429  P(node) =0.002282
+    class counts:     6     1
+   probabilities: 0.857 0.143 
+
+Node number 63: 718 observations
+  predicted class=1  expected loss=0.03621  P(node) =0.2341
+    class counts:    26   692
+   probabilities: 0.036 0.964 
+
+Node number 64: 1621 observations
+  predicted class=0  expected loss=0.05059  P(node) =0.5285
+    class counts:  1539    82
+   probabilities: 0.949 0.051 
+
+Node number 65: 26 observations,    complexity param=0.004975
+  predicted class=0  expected loss=0.5  P(node) =0.008477
+    class counts:    13    13
+   probabilities: 0.500 0.500 
+  left son=130 (12 obs) right son=131 (14 obs)
+  Primary splits:
+      cfsc       < 0.023  to the right, improve=11.140, (0 missing)
+      wfyou      < 0.085  to the right, improve= 4.789, (0 missing)
+      crlaverage < 8.454  to the left,  improve= 4.789, (0 missing)
+      crllongest < 47.5   to the left,  improve= 4.789, (0 missing)
+      cfpound    < 0.6215 to the left,  improve= 3.095, (0 missing)
+  Surrogate splits:
+      wfaddress < 0.01   to the right, agree=0.769, adj=0.500, (0 split)
+      wffont    < 3.225  to the right, agree=0.769, adj=0.500, (0 split)
+      cfexc     < 0.041  to the right, agree=0.769, adj=0.500, (0 split)
+      wfwill    < 0.11   to the right, agree=0.731, adj=0.417, (0 split)
+      wfyou     < 0.085  to the right, agree=0.731, adj=0.417, (0 split)
+
+Node number 66: 20 observations,    complexity param=0.003317
+  predicted class=0  expected loss=0.3  P(node) =0.006521
+    class counts:    14     6
+   probabilities: 0.700 0.300 
+  left son=132 (16 obs) right son=133 (4 obs)
+  Primary splits:
+      crlaverage < 4.18   to the left,  improve=4.900, (0 missing)
+      cfpar      < 0.0155 to the right, improve=2.817, (0 missing)
+      wf3d       < 0.405  to the left,  improve=2.178, (0 missing)
+      wfmail     < 1.005  to the left,  improve=2.178, (0 missing)
+      cfsc       < 0.192  to the left,  improve=2.178, (0 missing)
+
+Node number 67: 19 observations
+  predicted class=1  expected loss=0.1053  P(node) =0.006195
+    class counts:     2    17
+   probabilities: 0.105 0.895 
+
+Node number 70: 74 observations,    complexity param=0.004975
+  predicted class=0  expected loss=0.4324  P(node) =0.02413
+    class counts:    42    32
+   probabilities: 0.568 0.432 
+  left son=140 (67 obs) right son=141 (7 obs)
+  Primary splits:
+      wfinternet < 0.555  to the left,  improve=4.981, (0 missing)
+      crltotal   < 164    to the left,  improve=4.873, (0 missing)
+      cfexc      < 0.108  to the left,  improve=4.732, (0 missing)
+      crlaverage < 1.286  to the left,  improve=4.501, (0 missing)
+      wfgeorge   < 0.19   to the right, improve=3.832, (0 missing)
+  Surrogate splits:
+      wfmoney < 0.095  to the left,  agree=0.919, adj=0.143, (0 split)
+
+Node number 71: 19 observations
+  predicted class=1  expected loss=0.1053  P(node) =0.006195
+    class counts:     2    17
+   probabilities: 0.105 0.895 
+
+Node number 130: 12 observations
+  predicted class=0  expected loss=0  P(node) =0.003913
+    class counts:    12     0
+   probabilities: 1.000 0.000 
+
+Node number 131: 14 observations
+  predicted class=1  expected loss=0.07143  P(node) =0.004565
+    class counts:     1    13
+   probabilities: 0.071 0.929 
+
+Node number 132: 16 observations
+  predicted class=0  expected loss=0.125  P(node) =0.005217
+    class counts:    14     2
+   probabilities: 0.875 0.125 
+
+Node number 133: 4 observations
+  predicted class=1  expected loss=0  P(node) =0.001304
+    class counts:     0     4
+   probabilities: 0.000 1.000 
+
+Node number 140: 67 observations,    complexity param=0.004975
+  predicted class=0  expected loss=0.3731  P(node) =0.02185
+    class counts:    42    25
+   probabilities: 0.627 0.373 
+  left son=280 (52 obs) right son=281 (15 obs)
+  Primary splits:
+      crltotal   < 164    to the left,  improve=5.015, (0 missing)
+      crlaverage < 2.544  to the left,  improve=4.744, (0 missing)
+      cfexc      < 0.121  to the left,  improve=4.539, (0 missing)
+      wfover     < 0.015  to the left,  improve=3.405, (0 missing)
+      wfgeorge   < 0.19   to the right, improve=2.895, (0 missing)
+  Surrogate splits:
+      crllongest < 55.5   to the left,  agree=0.881, adj=0.467, (0 split)
+      wfover     < 0.015  to the left,  agree=0.851, adj=0.333, (0 split)
+      crlaverage < 4.636  to the left,  agree=0.851, adj=0.333, (0 split)
+      wffree     < 0.485  to the right, agree=0.821, adj=0.200, (0 split)
+      wf000      < 0.2    to the left,  agree=0.821, adj=0.200, (0 split)
+
+Node number 141: 7 observations
+  predicted class=1  expected loss=0  P(node) =0.002282
+    class counts:     0     7
+   probabilities: 0.000 1.000 
+
+Node number 280: 52 observations,    complexity param=0.003317
+  predicted class=0  expected loss=0.2692  P(node) =0.01695
+    class counts:    38    14
+   probabilities: 0.731 0.269 
+  left son=560 (46 obs) right son=561 (6 obs)
+  Primary splits:
+      cfexc      < 0.2675 to the left,  improve=4.317, (0 missing)
+      wffree     < 0.65   to the left,  improve=3.056, (0 missing)
+      wfyou      < 1.025  to the right, improve=2.808, (0 missing)
+      crlaverage < 1.286  to the left,  improve=2.513, (0 missing)
+      wfreport   < 0.545  to the left,  improve=2.222, (0 missing)
+
+Node number 281: 15 observations,    complexity param=0.003317
+  predicted class=1  expected loss=0.2667  P(node) =0.004891
+    class counts:     4    11
+   probabilities: 0.267 0.733 
+  left son=562 (4 obs) right son=563 (11 obs)
+  Primary splits:
+      wf1999 < 0.21   to the right, improve=5.867, (0 missing)
+      wfyou  < 0.4    to the left,  improve=4.033, (0 missing)
+      wfall  < 0.33   to the right, improve=2.548, (0 missing)
+      wfhp   < 0.18   to the right, improve=2.482, (0 missing)
+      wfhpl  < 0.37   to the right, improve=2.482, (0 missing)
+  Surrogate splits:
+      wfyou  < 0.4    to the left,  agree=0.933, adj=0.75, (0 split)
+      wfall  < 0.33   to the right, agree=0.867, adj=0.50, (0 split)
+      wfhp   < 0.18   to the right, agree=0.867, adj=0.50, (0 split)
+      wfhpl  < 0.37   to the right, agree=0.867, adj=0.50, (0 split)
+      wffree < 0.385  to the left,  agree=0.800, adj=0.25, (0 split)
+
+Node number 560: 46 observations
+  predicted class=0  expected loss=0.1957  P(node) =0.015
+    class counts:    37     9
+   probabilities: 0.804 0.196 
+
+Node number 561: 6 observations
+  predicted class=1  expected loss=0.1667  P(node) =0.001956
+    class counts:     1     5
+   probabilities: 0.167 0.833 
+
+Node number 562: 4 observations
+  predicted class=0  expected loss=0  P(node) =0.001304
+    class counts:     4     0
+   probabilities: 1.000 0.000 
+
+Node number 563: 11 observations
+  predicted class=1  expected loss=0  P(node) =0.003587
+    class counts:     0    11
+   probabilities: 0.000 1.000 
+

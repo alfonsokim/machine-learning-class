@@ -1,0 +1,171 @@
+```{r setup, echo=FALSE}
+opts_chunk$set(cache = TRUE, cache.path="~/r-workspace/machine-learning/ex1")
+opts_chunk$set(eval = TRUE, echo = TRUE, include = TRUE)
+```
+
+
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+data.path <- "/Users/Alfonso/r-workspace/machine-learning/ex1/data/optdigits"
+load('~/Documents/MCC/Aprendizaje/Examen/ambiente_redes_con_roc_glm.RData')
+load("~/r-workspace/machine-learning/ex1/glm_models.Rdata")
+source("~/r-workspace/machine-learning/ex1/nnet_plot.R")
+set.seed(145849)
+library(ggplot2)
+library(glmnet)
+library(ROCR)
+library(nnet)
+library(plyr)
+```
+
+Examen Parcial 1 - Aprendizaje de Máquina
+========================================================
+### Parte 2
+
+Alfonso Kim
+--------------------------------------------------------
+
+### 2. Reconocimiento de dígitos: NIST dataset
+
+#### Datos
+
+Usé los datos indicados. Ya se encuentran separados en entrenamiento y pruebas.
+
+```{r cache=TRUE, cache.path="~/r-workspace/machine-learning/ex1"}
+train.data <- read.csv(paste(data.path, "optdigits.tra", sep="/"), 
+                       na.strings=0, header = F)
+test.data <- read.csv(paste(data.path, "optdigits.tes", sep="/"), 
+                      na.strings=0, header = F)
+```
+
+#### Preprocesamiento
+
+No había que hacer mucho ya que los datos venian separados en entrenamiento y pruebas. El set de entrenamiento está bien balanceado.
+
+Convertir los NAs en ceros
+```{r cache=TRUE, cache.path="~/r-workspace/machine-learning/ex1"}
+train.data[ is.na( train.data ) ] <- 0
+test.data[ is.na( test.data ) ] <- 0
+```
+
+A la columna 65 llamarle i; cambiar a factor  
+
+```{r cache=TRUE, cache.path="~/r-workspace/machine-learning/ex1"}
+digits.cols <- paste("c", 1:64, sep="")
+names(train.data) <- c(digits.cols, "i")
+names(test.data) <- c(digits.cols, "i")
+
+train.data$i <- as.factor(train.data$i)
+test.data$i <- as.factor(test.data$i)
+```
+
+#### 1. Generar modelos de regresión logística
+
+```{r eval=FALSE}
+glm.models <- lapply(0:9, function(i){
+    train.df <- train.data
+    class <- as.factor(ifelse(train.df$i == i, 1, 0))
+    train.df <- train.df[, digits.cols]
+    model <- cv.glmnet(x=as.matrix(train.df), y=class,
+                       alpha = 1, intercept = T, family="binomial",
+                       nfolds = 10, nlambda = 100)
+    model
+})
+```
+
+
+Cálculo de las tasas de error:
+```{r}
+error.rates <- c()
+for(i in 1:9){
+    model.i <- glm.models[[i]]
+    test.df <- test.data
+    class.i <- as.factor(ifelse(test.df$i == i, 1, 0))
+    test.df <- test.df[, c(digits.cols)]
+    preds.i <- predict(model.i, newx=as.matrix(test.df), 
+                       type="response", s=model.i$lambda.1se)
+    results.i <- data.frame(preds=preds.i, class=class.i)
+    fp.i <- nrow(subset(results.i, X1 >= 0.5 & class == 0)) / nrow(test.df)
+    error.rates <- c(error.rates, fp.i)
+}
+
+error.rates
+```
+
+Las tasas de error son buenas para los 9 dígitos
+
+#### 2: Redes Neuronales
+
+Crear la matriz de modelos:
+```{r}
+tune.params <- expand.grid(decay = c(0.1, 0.5, 1, 10), size = c(64, 32, 16))
+```
+
+Construir las redes neuronales con los distintos parámetros definidos
+```{r eval=FALSE}
+digits.models <- dlply(tune.params, c("decay", "size"), function(df) {
+    digits.red <- nnet(i ~ ., data = train.data, 
+                         size = df$size, decay = df$decay, 
+                         maxit = 5000, MaxNWts = 10000)
+    digits.red
+})
+````
+
+Esta generación de redes tardó alrededor de 3 horas
+
+#### Cálculo del error de predicción
+
+```{r eval=FALSE}
+test.error <- ldply(digits.models, function(mod) {
+    net.probs <- predict(mod, newdata=test.data)
+    net.preds <- apply(net.probs, 1, which.max) - 1
+    
+    results <- data.frame(i=test.data$i, pred=net.preds)
+    
+    nrow(subset(results, pred != i)) / nrow(results)
+})
+````
+
+Visualización del error de los modelos
+```{r}
+ggplot(test.error, aes(x=decay, y=V1, colour=factor(size), group=size)) + 
+    geom_line() + 
+    geom_point() + 
+    scale_x_log10(breaks = c(0.1, 0.5, 1, 10))
+```
+
+La mejor red es la de 32 neuronas en la capa opculta, con decay=1
+
+```{r}
+best.net <- digits.models[[8]]
+````
+
+GGrafica de la red
+```{r message=FALSE, warning=FALSE}  
+plot(best.net)
+````  
+
+No se distingue bien por el tamaño de la red
+### Comparar el desempeño de ambas técnicas con el caracter 8
+
+```{r}
+roc.8.df <- test.data
+roc.8.df$class[roc.8.df$i == 8] <- rep(1, nrow(subset(roc.8.df, i == 8)))
+roc.8.df$class[roc.8.df$i != 8] <- rep(0, nrow(subset(roc.8.df, i != 8)))
+roc.8.df$class <- as.factor(roc.8.df$class)
+````
+
+
+
+```{r}
+digits.net.preds <- prediction(apply(predict(best.net, roc.8.df), 1, which.max), 
+                               as.data.frame(roc.8.df$class))
+
+net.roc <- performance(digits.net.preds, "sens", "fpr") 
+
+digits.glm.preds = prediction(predictions$p8, ifelse(predictions$i == 8, 1, 0))
+glm.roc <- performance(digits.glm.preds, "sens", "fpr")
+
+plot(net.roc)
+plot(glm.roc, add=T, col="red")
+````
+

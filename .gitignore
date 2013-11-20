@@ -1,0 +1,13 @@
+ex1/data/
+*.log
+*.gz
+*.history
+*.Rhistory
+*.zip
+*.Rnw
+*.pdf
+*.png
+*.Rdata
+*.docx
+*.html
+*.md

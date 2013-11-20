@@ -1,0 +1,199 @@
+```{r setup, echo=FALSE}
+opts_chunk$set(cache = TRUE, cache.path="~/r-workspace/machine-learning/ex1")
+#opts_chunk$set(eval = TRUE, echo = TRUE, include = TRUE)
+```
+
+```{r echo=FALSE}
+data.path <- "/Users/Alfonso/r-workspace/machine-learning/ex1/data"
+set.seed(145849)
+library(ggplot2)
+library(glmnet)
+```
+
+Examen Parcial 1 - Aprendizaje de Máquina
+========================================================
+### Parte 2
+
+Alfonso Kim
+--------------------------------------------------------   
+    
+### 1. Tasa de respuesta de correo para el censo de EU
+
+#### Datos
+Usé los datos [proporcionados][1]. Están separados en 2 fuentes:
+* 2010 Census
+* American Community Survey (ACS)  
+
+Existe una tercera fuente: Census geography que proporciona datos geográficos que no contienen datos del censo.
+
+Después de revisarlos noté que hay muchos huecos (valores NA) en los datos que corresponden a la encuesta ACS, además de que estas variables contienen margen de error que puede afectar los modelos, por lo que decidí sólo trabajar con los del censo del 2010.
+
+```{r cache=TRUE, cache.path="~/r-workspace/machine-learning/ex1"}
+data <- read.csv(paste(data.path, "data.csv", sep="/"), na.strings=0)
+cen.vars <- grep("CEN_2010", names(data), value=TRUE)
+```
+
+Después convertí a factor las variables geográficas
+```{r cache=TRUE, cache.path="~/r-workspace/machine-learning/ex1"}
+data$Tract <- as.factor(data$Tract)
+data$GIDBG <- as.factor(data$GIDBG)
+data$State <- as.factor(data$State)
+data$County <- as.factor(data$County)
+data$Block_Group <- as.factor(data$Block_Group)
+```
+
+Y agregué las variables geográficas al conjunto de datos
+```{r}
+cen.vars <- c("GIDBG", "Tract", "State", "County", "Block_Group", cen.vars)
+#Probar con solo las variables del CEN2010
+data <- subset(data, select=cen.vars)
+```
+
+```{r}
+ggplot(data, aes(x=Tot_Population_CEN_2010, y=Mail_Return_Rate_CEN_2010)) + 
+    geom_point()
+```
+
+Vemos claramente que la población total está fuertemente relacionada con la tasa de respuesta.
+
+#### Preprocesamiento
+
+Los datos deben ser separados en entrenamiento y pruebas. Sin embargo la separación se debe dar a nivel de  ``` tracts ```, ya que es la unidad de respuesta del censo que se quiere predecir.
+
+Consideré 70% para entrenamiento y 30% para pruebas. Primero separé los tracts con el conteo de tracts totales:
+```{r}
+library(plyr)
+tract.count <- count(data, "Tract")
+test.size <- ceiling(sum(tract.count$freq) * 0.3) # 30% para pruebas
+
+#Me aseguro que los conteos sean correctos
+sum(tract.count$freq); dim(data)
+```
+
+Agrego una columna nueva de nombre train, que evalua TRUE cuando sea un caso de entrenamiento:
+```{r}
+data <- cbind(data, train=TRUE)
+```
+
+Revuelvo los tracts de forma aleatoria para consumirlos en el muestreo:
+```{r}
+random.tracts <- tract.count[sample(nrow(tract.count)), ]
+nrow(random.tracts); nrow(tract.count)
+head(tract.count)
+head(random.tracts, 10); head(tract.count, 10)
+```
+
+### Ejercicio 1: Dividir en entrenamiento y pruebas
+
+Consumo tracts hasta tener el 70% de los datos de entrenamiento:
+```{r cache=TRUE, cache.path="~/r-workspace/machine-learning/ex1"}
+test.tracts <- data.frame()
+test.count <- 0
+random.idx <- 0
+str(test.count)
+str(test.size)
+
+while(test.count <= test.size){
+    test.tracts <- rbind(test.tracts, random.tracts[random.idx, ])
+    test.count <- sum(test.count, random.tracts[random.idx, ]$freq)
+    random.idx <- random.idx + 1
+}
+
+head(random.tracts)
+# Verificamos que sea una muestra representativa
+test.size; sum(test.tracts$freq)
+
+col.classes <- sapply(data, class)
+col.classes["Mail_Return_Rate_CEN_2010"]
+numeric.col <- col.classes[ col.classes %in% c("integer", "numeric") ]
+
+numeric.set <- subset(data[data$train, ], select=names(numeric.col))
+train.set <- numeric.set[, !( names( numeric.set ) %in% "Mail_Return_Rate_CEN_2010")]
+train.target <- numeric.set[, "Mail_Return_Rate_CEN_2010"]
+```
+
+
+Los tracts generados para pruebas se marcan en el set original:
+```{r }
+data[data$Tract %in% test.tracts$Tract, ]$train <- FALSE
+```
+
+Checar que no haya tracts en ambos sets:
+```{r }
+nrow( data[ data[ data$train, ]$Tract %in% data[! data$train, ]$Tract, ] ) == 0
+```
+
+#### Ejercicio 2: Ajustar un modelo con variables numericas
+
+La columna ```Tot_Population_CEN_2010``` es el total de conteos de las variables poblacionales. Dividí dichas variables entre el total para normalizarlos:
+```{r }
+columns <- setdiff(names(numeric.col), c("Tot_Population_CEN_2010", "Mail_Return_Rate_CEN_2010"))
+train.set[columns] <- train.set[columns] / train.set$Tot_Population_CEN_2010
+
+train.target <- numeric.set[, "Mail_Return_Rate_CEN_2010"]
+
+numeric.test.set <- subset(data[! data$train, ], select=names(numeric.col))
+test.set <- numeric.test.set[, !( names( numeric.test.set ) %in% "Mail_Return_Rate_CEN_2010")]
+
+test.set[columns] <- test.set[columns] / test.set$Tot_Population_CEN_2010
+```
+
+Modelo de Regresión Logistica con regularización Lasso
+```{r eval=FALSE}
+model.1 <- glmnet(x=as.matrix(train.set), y=train.target, 
+                  family = "gaussian", alpha=1, nlambda=100, intercept=T)
+```
+
+```{r echo=FALSE}
+load("~/r-workspace/machine-learning/ex1/ex1.Rdata")
+```
+
+```{r}
+plot(model.1, xvar="lambda")
+```
+
+
+Usando Validacion cruzada
+```{r eval=FALSE}
+cv.mod.lasso <- cv.glmnet(x=as.matrix(train.set), y=train.target,
+                          alpha = 1, intercept = T, 
+                          nfolds = 5, nlambda = 50) 
+```
+
+```{r}
+plot(cv.mod.lasso)
+
+coefs.lasso <- predict(cv.mod.lasso, 
+                       s = exp(-4), type = "coef") 
+
+round(coefs.lasso, 2)
+```
+
+#### Selección del coeficiente
+El modelo generado con lambda = -4 está dentro del rango con mínimo error
+
+#### Evaluación del modelo con los datos de pruebas:
+
+```{r eval=FALSE}
+test.preds <- predict(cv.mod.lasso, newx=as.matrix(test.set), s=exp(-4))
+preds.df <- data.frame(y=test.preds, x=test.target)
+```
+
+```{r}
+ggplot(preds.df, aes(x=x, y=X1)) + geom_point() +
+    geom_abline(slope = 1, intercept = 0, colour="red", size=2)
+```
+
+No usé variables MOE (Margen de Error) por distintos motivos:
+* Las variables MOE corresponden a variables del censo ACS, que contienen muchos "huecos" en las observaciones
+* En sí, una variable Margen de Error le incorpora ruido al modelo
+
+
+### Variables Categóricas
+
+
+```{r}
+
+```
+
+[1]: https://dl.dropboxusercontent.com/u/161342/aprendizaje_maquina/mail_return.zip "Mail Return"
