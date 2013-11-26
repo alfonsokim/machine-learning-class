@@ -251,6 +251,8 @@ ggplot(test.values.mod.1, aes(x=lambda, y=error)) +
 ?save
 save(list=ls(), file="~/r-workspace/machine-learning/ex1/ex1.Rdata")
 
+load("~/r-workspace/machine-learning/ex1/ex1.Rdata")
+
 
 
 
