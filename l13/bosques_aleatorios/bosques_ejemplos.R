@@ -1,7 +1,9 @@
 
 ###Bosques aleatorios#################################
+#install.packages("randomForest")
 library(randomForest)
 library(rpart)
+#install.packages("mlbench")
 library(mlbench)
 data(BostonHousing)
 set.seed(111)
@@ -12,8 +14,9 @@ BostonHousing_train<-BostonHousing[BostonHousing$train,]
 BostonHousing_test<-BostonHousing[!BostonHousing$train,]
 BostonHousing_train$train<-NULL
 
-arbol_housing<-rpart(medv~.,data=BostonHousing_train,method="anova",control=rpart.control(cp=0.001,xval=10))
-
+arbol_housing<-rpart(medv~.,data=BostonHousing_train,method="anova",
+                     control=rpart.control(cp=0.001,xval=10))
+?printcp
 printcp(arbol_housing)
 plotcp(arbol_housing)
 mean((predict(arbol_housing, BostonHousing_test)-BostonHousing_test$medv)^2)
