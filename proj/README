@@ -1,0 +1,88 @@
+## =======================================
+## Aprendizaje Máquina
+## -------------------
+## Maestría en Ciencias de Datos / Computación
+## José Iván García / Alfonso Kim
+## =======================================
+
+Instrucciones para ejecutar el clasificador de perros y gatos
+
+------------------------
+=== 1. Prerequisitos ===
+
+* Matlab 11 o 12
+  ** Sistema de Detección de Objetos (https://github.com/rbgirshick/voc-dpm,
+     http://people.cs.uchicago.edu/~rbg/star-cascade/)
+     NOTA: Sólo se soportan plataformas LINUX y MacOS
+  ** Librería export_fig para recorte de imágenes 
+     (http://www.mathworks.com/matlabcentral/fileexchange/23629-exportfig)
+
+* Python versión 2.6 o 2.7, además de las librerías:
+  ** OpenCV (http://opencv.org/)
+  ** PIL (http://www.pythonware.com/products/pil/)
+
+* R Version 3 y las librerías:
+  ** plyr para la iteración de Data Frames
+  ** e1071 para las máquinas de soporte vectorial
+  ** ggplot2 para gráficas
+
+* Imágenes de entrenamiento y pruebas de perros y gatos
+  ** Pueden ser los de Kaggle (https://www.kaggle.com/c/dogs-vs-cats/data)
+
+* En la carpeta Datos del entregable se encuentran 2 archivos (uno para cada
+  especie) con imágenes pre procesadas.
+
+
+----------------------
+=== 2. Instalación ===
+* Descomprimir la distribucion del Sistema de Detección de Objetos
+  ** Seguir los pasos de instalación del sistema (https://github.com/rbgirshick/voc-dpm)
+  ** Copiar a la carpeta el código Matlab de la entrega
+
+* Asegurarse que el *demo* del sistema funcione correctamente
+
+
+----------------------------------------
+=== 3. Pre procesamiento de imágenes ===
+* Ubicar el/los directorio(s) con las imágenes de perros y gatos
+* Modificar las rutas en los directorios gatos.m y perros.m para que apunten a
+  las carpetas correspondientes y evalúen el número de imágenes deseadas
+
+* Ejecutar gatos.m y perros.m para centrar los animales de la imagen
+
+* Modificar surf.py dentro de la carpeta Python para que apunte a la carpeta
+  donde se guardaron las imágenes centradas en Matlab
+
+* Ejecutar surf.py (ver el método main) para encontrar las características de la imagen
+
+* Modificar el main de surf.py para que "apile" los distintos archivos de imágenes
+  en una matriz de valores numéricos
+
+
+-------------------------------------------------
+=== 4. Entrenamiento y pruebas de los modelos ===
+* Ejecutar los scripts de R para generar y probar los clasificadores
+
+
+-----------------------
+=== 5. Bibliografía ===
+* http://xenon.stanford.edu/~pgolle/papers/dogcat.pdf
+
+* Cascade Object Detection with Deformable Parts Model
+ ** https://github.com/rbgirshick/voc-dpm
+ ** http://people.cs.uchicago.edu/~rbg/star-cascade/
+ ** http://people.cs.uchicago.edu/~rbg/papers/Object-Detection-with-Discriminatively-Trained-Part-Based-Models--Felzenszwalb-Girshick-McAllester-Ramanan.pdf
+ ** http://people.cs.uchicago.edu/~rbg/papers/Cascade-Object-Detection-with-Deformable-Part-Models--Felzenszwalb-Girshick-McAllester.pdf
+ ** http://people.cs.uchicago.edu/~rbg/latent/voc-release5-faq.html
+
+* FAST, SIFT y SURF
+ ** https://opencv-python-tutroals.readthedocs.org/en/latest/py_tutorials/py_feature2d/py_fast/py_fast.html
+ ** https://lirias.kuleuven.be/bitstream/123456789/71383/1/Bay_Tuytelaars_VanGool-surf-eccv06.pdf
+ ** http://stackoverflow.com/questions/10799625/does-anyone-have-any-examples-of-using-opencv-with-python-for-descriptor-extract
+ ** http://stackoverflow.com/questions/18578855/surf-descriptors-with-opencv-2-4-6-1-and-python
+ ** http://stackoverflow.com/questions/10984313/opencv-2-4-1-computing-surf-descriptors-in-python
+ ** 
+
+
+
+

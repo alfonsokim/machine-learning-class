@@ -39,8 +39,8 @@ test.grid <- expand.grid(ntree=c(200,400,600), mtry=seq(2, 10, 2))
 results <- ddply(test.grid, c("ntree", "mtry"), function(d) {
     rf.x <- randomForest(Purchase ~ ., data=OJ.train, ntree=d$ntree,
                          mtry=d$mtry, importance=T)
-    train.error <- sum(as.integer(predict(rf.x) != OJ.train$Purchase))
-    test.error <- sum(as.integer(predict(rf.x, newdata=OJ.test) != OJ.test$Purchase))
+    train.error <- sum(as.integer(predict(rf.x) != OJ.train$Purchase)) / nrow(OJ.train)
+    test.error <- sum(as.integer(predict(rf.x, newdata=OJ.test) != OJ.test$Purchase)) / nrow(OJ.test)
     data.frame(
         train.error=train.error,
         test.error=test.error

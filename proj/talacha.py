@@ -1,1 +1,0 @@
-talacha.py
